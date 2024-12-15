@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="24" height="30" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="194">
+ <tileset firstgid="1" source="../tilesets/outside.tsx"/>
+ <tileset firstgid="49" source="../tilesets/items.tsx"/>
+ <tileset firstgid="54" source="../tilesets/inside.tsx"/>
+ <tileset firstgid="150" source="../tilesets/extra.tsx"/>
+ <tileset firstgid="216" source="../tilesets/objects.tsx"/>
+ <tileset firstgid="244" source="../tilesets/platforms.tsx"/>
+ <tileset firstgid="252" source="../tilesets/grass.tsx"/>
+ <layer id="1" name="Terrain" width="24" height="30">
+  <data encoding="csv">
+162,162,153,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,173,154,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,183,184,186,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,186,185,161,162,162,
+162,162,163,0,0,0,0,0,0,0,185,0,0,0,0,0,0,0,0,0,196,161,162,162,
+162,162,163,0,0,0,0,0,0,0,196,0,186,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,150,151,152,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,172,173,174,0,0,0,0,0,0,150,151,151,151,151,151,165,162,162,
+162,162,163,0,0,0,0,0,186,0,0,0,0,0,0,161,162,162,162,162,162,162,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,172,173,173,173,173,173,154,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,183,184,185,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,186,196,161,162,162,
+162,162,163,0,0,0,150,151,152,0,0,0,0,0,0,0,0,0,0,0,186,161,162,162,
+162,162,163,0,0,0,172,173,174,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,150,151,151,152,0,0,161,162,162,
+162,162,164,151,151,152,0,0,0,0,0,0,0,0,0,172,173,173,174,0,0,161,162,162,
+162,162,153,173,173,174,0,0,0,0,0,0,0,0,0,186,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,161,162,162,
+162,162,163,0,0,0,0,0,150,151,152,0,0,0,0,150,151,151,152,186,185,161,162,162,
+162,162,163,185,0,0,0,0,161,162,163,0,0,194,195,161,162,162,163,185,196,161,162,162,
+162,162,163,196,186,0,0,186,161,162,163,0,0,205,206,161,162,162,163,196,186,161,162,162,
+162,162,164,151,151,151,151,151,165,162,164,151,151,151,151,165,162,162,164,151,151,165,162,162,
+162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,
+162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162,162
+</data>
+ </layer>
+ <objectgroup id="4" name="Objects">
+  <object id="4" gid="219" x="1184" y="384" width="68" height="186"/>
+  <object id="189" gid="1073742050" x="960" y="640" width="64" height="64">
+   <properties>
+    <property name="inverted" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="190" gid="1073742050" x="1024" y="640" width="64" height="64">
+   <properties>
+    <property name="inverted" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="191" gid="1073742050" x="1088" y="640" width="64" height="64">
+   <properties>
+    <property name="inverted" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="192" gid="1073742050" x="512" y="576" width="64" height="64">
+   <properties>
+    <property name="inverted" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="193" gid="1073742050" x="640" y="384" width="64" height="64">
+   <properties>
+    <property name="inverted" type="bool" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="13" name="Moving Objects">
+  <object id="87" name="moving_object" x="384" y="1088" width="512" height="10">
+   <properties>
+    <property name="flip" type="bool" value="false"/>
+    <property name="platform" type="bool" value="true"/>
+    <property name="speed" type="int" value="60"/>
+   </properties>
+  </object>
+  <object id="139" name="moving_object" x="1024" y="704" width="10" height="320">
+   <properties>
+    <property name="flip" type="bool" value="false"/>
+    <property name="platform" type="bool" value="true"/>
+    <property name="speed" type="int" value="100"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
