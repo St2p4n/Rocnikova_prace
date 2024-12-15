@@ -21,7 +21,7 @@ class Game:
 
             self.current_stage.run()
 
-            pygame.display.update()
+            pygame.display.update()#SKI
 
 if __name__ == '__main__':
     game = Game()
