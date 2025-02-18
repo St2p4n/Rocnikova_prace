@@ -20,14 +20,16 @@ class Level:
       keys = pygame.key.get_pressed()
       moving_down = False
 
-      if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+      if keys[pygame.K_LEFT] or keys[pygame.K_a] and self.player_rect.x > 0:
          self.player_rect.x -= self.speed
-      if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+      if keys[pygame.K_RIGHT] or keys[pygame.K_d] and self.player_rect.x > 0:
          self.player_rect.x += self.speed
-      if keys[pygame.K_UP] or keys[pygame.K_w]:
+      if keys[pygame.K_UP] or keys[pygame.K_w] and self.player_rect.x > 0:
          self.player_rect.y -= self.speed
-      if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+      if keys[pygame.K_DOWN] or keys[pygame.K_s] and self.player_rect.x > 0:
          self.player_rect.y += self.speed
+
+
          moving_down = True  
     
       if moving_down:
@@ -46,4 +48,21 @@ class Level:
       self.clock.tick(60) 
 
 
+
+class CameraGroup(pygame.sprite.Group):
+
+   def __init__(self):
+      super().__init__()
+
+      self.offset = pygame.math.Vector2(700, 500)
+      self.ground_rect = self.ground_surf.get_rect(topleft=(0, 0))
+
+   def draw(self, surface):
+      ground_offset = self.ground_rect.topleft - self.offset
+      surface.blit(self.ground_surf, ground_offset)
+      for sprite in self.sprites():
+         offset_pos = sprite.rect.topleft - self.offset
+         self.display_surface.blit(sprite.image, offset_pos)
+
      
+
