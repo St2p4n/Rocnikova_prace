@@ -1,5 +1,4 @@
 from setting import *
-from level1 import Level1
 class Level:
     def __init__(self):
         self.display_surface = pygame.display.get_surface()
@@ -92,12 +91,6 @@ class Level:
 
         self.display_surface.blit(self.player, (player_scaled_x, player_scaled_y))
 
-        if self.player_rect.topleft == (600, 420):
-            if keys[pygame.K_SPACE]:
-                self.current_stage = Level1()
-                self.start_level = Level1()  # Start Level 1
-                print("Starting Level 1!")
-
         pygame.display.update()
         self.clock.tick(60)
 
@@ -132,5 +125,7 @@ class Level:
 
     def set_zoom(self, zoom_level):
         self.target_zoom = zoom_level
+
+    
 
     
