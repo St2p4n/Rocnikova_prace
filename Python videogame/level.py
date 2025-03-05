@@ -6,6 +6,7 @@ class Level:
       
         self.background = pygame.image.load("data/Levels/background.png")
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
+        
         self.move_down = pygame.image.load("data/Aseprite/towards-going1.png")
         self.move_down2 = pygame.image.load("data/Aseprite/towards-going2.png")
         self.move_up = pygame.image.load("data/Aseprite/towards-going1.png")
