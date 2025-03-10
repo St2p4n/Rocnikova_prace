@@ -47,12 +47,15 @@ class Level:
         segment_start, segment_end = self.path_segments[self.current_segment]
 
         # Player movement
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
+        if keys[pygame.K_w]:
             self.move_along_path(segment_start, segment_end, "up")
             moving_up = True
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        if keys[pygame.K_s]:
             self.move_along_path(segment_start, segment_end, "down")
             moving_down = True
+
+        if moving_up and keys[pygame.K_s]:
+            moving_down = False
 
         # Animation 
         if moving_up:
