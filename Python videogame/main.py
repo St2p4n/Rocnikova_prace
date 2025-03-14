@@ -20,11 +20,11 @@ class Game:
 
     def run(self):
         running = True
-        while running:
-            for event in pygame.event.get():
+        while running: 
+            for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
                     running = False
-            self.switch_level()  #Kontrola přepnutí levelu
+            self.switch_level()  #Kontrola přepnutí levelu 
             self.current_stage.run() 
             pygame.display.update()
 
