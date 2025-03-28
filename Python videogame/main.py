@@ -7,7 +7,6 @@ class Game:
         pygame.init()
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption("Pirates")
-
         self.current_stage = Level() 
 
     def switch_level(self):
@@ -31,6 +30,7 @@ class Game:
         pygame.quit()
         sys.exit()
 
-if __name__ == '__main__':
+if __name__ == '__main__':  
     game = Game()
     game.run()
+
