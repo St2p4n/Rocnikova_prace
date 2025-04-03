@@ -1,7 +1,8 @@
 from setting import *
 from level import Level
+import pygame
 
-class Level1:
+class Level3:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
@@ -145,7 +146,7 @@ class Level1:
                 self.display_surface.blit(self.heart_img, pos)
             else:
                 self.display_surface.blit(self.empty_heart_img, pos)
-    # Flag collision
+    
     def handle_flag_collision(self):
         if not self.transitioning and self.player_rect.colliderect(self.flag):
             self.transitioning = True
@@ -161,7 +162,7 @@ class Level1:
     def run(self):
         keys = pygame.key.get_pressed()
         
-        # Flag collision 
+        # Handle flag collision first
         self.handle_flag_collision()
         
         # If transitioning, skip normal game logic
@@ -170,9 +171,9 @@ class Level1:
         
         # Normal game logic
         self.velocity_x = 0
-        if keys[pygame.K_a] and not keys[pygame.K_d]:
+        if keys[pygame.K_a]:
             self.velocity_x = -5
-        elif keys[pygame.K_d] and not keys[pygame.K_a]:
+        if keys[pygame.K_d]:
             self.velocity_x = 5
 
         if keys[pygame.K_SPACE] and self.on_ground:
@@ -229,7 +230,7 @@ class Level1:
             self.player_rect.topleft = (100, 600)
 
         # Animation handling
-        if keys[pygame.K_a] and not keys[pygame.K_d]:
+        if keys[pygame.K_a]:
             self.frame += 1.5
             if self.frame // self.animation_speed % 3 == 0:
                 self.player = self.walking_left
@@ -237,7 +238,7 @@ class Level1:
                 self.player = self.walking_left2
             else:
                 self.player = self.walking_left3
-        elif keys[pygame.K_d] and not keys[pygame.K_a]:
+        elif keys[pygame.K_d]:
             self.frame += 1.5
             if self.frame // self.animation_speed % 3 == 0:
                 self.player = self.walking_right
@@ -270,7 +271,7 @@ class Level1:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                         self.hearts = self.max_hearts
                         self.player_rect = pygame.Rect(100, 600, 50, 50)
-                        return Level1()
+                        return Level3()
                     
                     
         if keys[pygame.K_ESCAPE]:
