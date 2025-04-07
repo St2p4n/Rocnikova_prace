@@ -207,12 +207,12 @@ class Level1:
                       self.player_rect.right > platform.left and 
                       self.player_rect.left < platform.left):
                     self.player_rect.right = platform.left
-                    self.velocity_y = 8
+                    self.velocity_y = 11
                 elif (self.velocity_x < 0 and 
                       self.player_rect.left < platform.right and 
                       self.player_rect.right > platform.right):
                     self.player_rect.left = platform.right
-                    self.velocity_y = 8
+                    self.velocity_y = 11
 
         # Screen boundaries
         if self.player_rect.left < 0:

@@ -1,11 +1,11 @@
 from setting import *
 from level import Level
 
-class Level2:
+class Level4:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
-        self.player_rect = pygame.Rect(100, 950, 50, 50)
+        self.player_rect = pygame.Rect(540, 50, 50, 50)
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
  
@@ -17,7 +17,7 @@ class Level2:
         self.walking_right2 = pygame.image.load("data/Aseprite/walking_right2.png")
         self.walking_right3 = pygame.image.load("data/Aseprite/walking_right3.png")
 
-        self.background = pygame.image.load("data/Levels/Level2.png")
+        self.background = pygame.image.load("data/Levels/Level4.png")
         self.background = pygame.transform.scale(self.background, (WINDOW_WIDTH, WINDOW_HEIGHT))
         
         # Load moving platform image
@@ -68,21 +68,22 @@ class Level2:
         self.platforms = [
             pygame.Rect(0, WINDOW_HEIGHT - 55, WINDOW_WIDTH, 50), # Ground
             pygame.Rect(WINDOW_WIDTH - 30, 0, 50, WINDOW_HEIGHT), # Right wall
-            pygame.Rect(630, 965, 60, 40),
-            pygame.Rect(1150, 870, 80, 180),
-            pygame.Rect(1055, 950, 80, 50), 
-            pygame.Rect(285, 440, 240, 180),
-            pygame.Rect(660, 520, 215, 150),
-            pygame.Rect(1290, 225, 60, 50), 
-            pygame.Rect(1440, 150, 190, 100), 
-            pygame.Rect(1290, 725, 340, 100), 
-            pygame.Rect(1035, 610, 70, 140), 
-            pygame.Rect(1130, 675, 35, 75), 
-            pygame.Rect(690, 341, 85, 10), # Moving platform
+            pygame.Rect(530, 995, 90, 40), # done
+            pygame.Rect(1345, 995, 90, 50), # done
+            pygame.Rect(475, 450, 30, 70), # done
+            pygame.Rect(475, 150, 30, 70), # 
+            pygame.Rect(530, 150, 345, 350), # done 
+            pygame.Rect(1800, 145, 60, 80), # done
+            pygame.Rect(890, 242, 830, 100), # done
+            pygame.Rect(530, 500, 1540, 300), # done
+            pygame.Rect(0, 290, 30, 70), # done 
+            pygame.Rect(0, 610, 30, 70), # done 
+            pygame.Rect(0, 930, 30, 70), # done
+            pygame.Rect(690, 41, 85, 10), # Moving platform
         ]
 
         # Moving platform properties
-        self.moving_platform_index = 12
+        self.moving_platform_index = 13
         self.moving_platform_speed = 2  
         self.moving_platform_direction = 1  
 
@@ -161,7 +162,7 @@ class Level2:
                 if self.return_to_map_pos:
                     # Return to Level but signal we want special position
                     level = Level()
-                    level.current_segment = 2  # Set segment directly
+                    level.current_segment = 7  # Set segment directly
                     return level
                 return Level()  # Normal transition
         return self
@@ -222,8 +223,8 @@ class Level2:
                     self.velocity_y = 11
 
         # Screen boundaries
-        if self.player_rect.left < 0:
-            self.player_rect.left = 0
+        if self.player_rect.left < -20:
+            self.player_rect.left = -20
         if self.player_rect.right > WINDOW_WIDTH:
             self.player_rect.right = WINDOW_WIDTH
         if self.player_rect.top < 0:
@@ -255,6 +256,9 @@ class Level2:
         self.display_surface.blit(self.player, self.player_rect.topleft)
         self.display_surface.blit(self.current_crab_img, self.enemy)
         self.update_moving_platform()
+        
+        for platform in self.platforms:
+            pygame.draw.rect(self.display_surface, (255, 0, 0), platform)
 
         # Reset level when out of hearts
         if self.hearts <= 0:
@@ -272,7 +276,7 @@ class Level2:
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                         self.hearts = self.max_hearts
                         self.player_rect = pygame.Rect(100, 950, 50, 50)
-                        return Level2()
+                        return Level4()
                     
                     
         if keys[pygame.K_ESCAPE]:

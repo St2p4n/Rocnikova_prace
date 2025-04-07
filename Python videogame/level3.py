@@ -6,7 +6,7 @@ class Level3:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
-        self.player_rect = pygame.Rect(100, 600, 50, 50)
+        self.player_rect = pygame.Rect(100, 100, 50, 50)
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
  
@@ -18,12 +18,8 @@ class Level3:
         self.walking_right2 = pygame.image.load("data/Aseprite/walking_right2.png")
         self.walking_right3 = pygame.image.load("data/Aseprite/walking_right3.png")
 
-        self.background = pygame.image.load("data/Levels/Level1.3.png")
+        self.background = pygame.image.load("data/Levels/Level3.png")
         self.background = pygame.transform.scale(self.background, (WINDOW_WIDTH, WINDOW_HEIGHT))
-        
-        # Load moving platform image
-        self.moving_platform_img = pygame.image.load("data/Aseprite/moving_platform.png")
-        self.moving_platform_img = pygame.transform.scale(self.moving_platform_img, (100, 10))
 
         self.velocity_x = 0
         self.velocity_y = 0
@@ -38,10 +34,6 @@ class Level3:
         self.heart_img = pygame.transform.scale(self.heart_img, (50, 50))
         self.empty_heart_img = pygame.image.load("data/Aseprite/empty_heart.png")
         self.empty_heart_img = pygame.transform.scale(self.empty_heart_img, (50, 50))
-        
-        # Load moving platform image
-        self.moving_platform_img = pygame.image.load("data/Aseprite/moving_platform.png")
-        self.moving_platform_img = pygame.transform.scale(self.moving_platform_img, (140, 70))
 
         # Load crab enemy sprites
         self.crab_img = pygame.image.load("data/Aseprite/crab.png")
@@ -49,7 +41,7 @@ class Level3:
         self.current_crab_img = self.crab_img
 
         # Enemy 
-        self.enemy = pygame.Rect(550, 750, 50, 80)
+        self.enemy = pygame.Rect(550, 962, 50, 80)
         self.color = (255, 0, 0)
         self.last_hit_time = 0
         self.hit_cooldown = 1000  # 1 second cooldown in milliseconds
@@ -59,51 +51,34 @@ class Level3:
         self.enemy_start_x = 470  # Starting X position
         
         # Flag
-        self.flag = pygame.Rect(1850, 550, 50, 50)
-        self.flag_color = (0, 255, 0)
+        self.flag = pygame.Rect(1745, 950, 50, 50)
+        self.flag_color = (255, 255, 0)
         self.level_complete = False
         self.transitioning = False
         self.transition_alpha = 0
-
+        
+        # Return position when going back to main level
+        self.return_to_map_pos = (-770, 440)  # Position on main map
+        self.return_segment = 4  # Segment index for (-770, 440) to (-770, 80)
+        
         # Platforms
         self.platforms = [
-            pygame.Rect(0, WINDOW_HEIGHT - 30, WINDOW_WIDTH, 50), # Ground
-            pygame.Rect(70, 680, 230, 30),
-            pygame.Rect(400, 774, 180, 250),
-            pygame.Rect(360, 526, 90, 80),
-            pygame.Rect(560, 426, 180, 100),
-            pygame.Rect(890, 400, 180, 100),
-            pygame.Rect(1220, 420, 180, 100),
-            pygame.Rect(1390, 650, 180, 100),
-            pygame.Rect(1690, 580, 200, 100),
-            pygame.Rect(690, 720, 85, 10),
+            pygame.Rect(0, WINDOW_HEIGHT - 100, WINDOW_WIDTH, 50), # Ground
+            pygame.Rect(WINDOW_WIDTH - 30, 0, 50, WINDOW_HEIGHT), # Right wall
+            pygame.Rect(0, 570, 150, 200), #
+            pygame.Rect(480, 130, 50, 50),
+            pygame.Rect(860, 145, 50, 5),
+            pygame.Rect(300, 565, 515, 200),
+            pygame.Rect(1700, 195, 190, 180), #
+            pygame.Rect(0, 195, 1530, 180), #
+            pygame.Rect(950, 565, 900, 180), 
+            pygame.Rect(1100, 515, 90, 50), 
+            pygame.Rect(820, 945, 60, 50), 
         ]
-
-        # Moving platform properties
-        self.moving_platform_index = 9  
-        self.moving_platform_speed = 2  
-        self.moving_platform_direction = 1  
 
         self.frame = 0
         self.animation_speed = 10
 
-    def update_moving_platform(self):
-        platform = self.platforms[self.moving_platform_index]
-        platform.x += self.moving_platform_speed * self.moving_platform_direction
-        
-        if self.moving_platform_index:
-            self.display_surface.blit(self.moving_platform_img, platform)
-        else:
-            pygame.draw.rect(self.display_surface, (100, 100, 100), platform)
-        
-        if platform.x >= 1200: 
-            self.moving_platform_direction = -1
-        elif platform.x <= 680:  
-            self.moving_platform_direction = 1
-
-        if self.player_rect.colliderect(platform) and self.velocity_y >= 0:
-            self.player_rect.x += self.moving_platform_speed * self.moving_platform_direction
-    
     def update_enemy(self):
         self.enemy.x += self.enemy_speed * self.enemy_direction
         
@@ -156,7 +131,7 @@ class Level3:
         if self.transitioning:
             self.transition_alpha += 15
             if self.transition_alpha >= 255:
-                return Level()  # Transition complete, return new level
+                return "level_complete"  # Signal that level is complete
         return self
         
     def run(self):
@@ -165,15 +140,16 @@ class Level3:
         # Handle flag collision first
         self.handle_flag_collision()
         
-        # If transitioning, skip normal game logic
         if self.transitioning:
-            return self.update_transition()
+            result = self.update_transition()
+            if result == "level_complete":
+                return Level()  # Return to main level with proper position
         
-        # Normal game logic
+        # Game logic
         self.velocity_x = 0
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and not keys[pygame.K_d]:
             self.velocity_x = -5
-        if keys[pygame.K_d]:
+        elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.velocity_x = 5
 
         if keys[pygame.K_SPACE] and self.on_ground:
@@ -184,7 +160,6 @@ class Level3:
         self.player_rect.x += self.velocity_x
         self.player_rect.y += self.velocity_y
 
-        self.update_moving_platform()
         self.update_enemy()
         self.check_enemy_collision()
         self.animation_enemy()
@@ -208,29 +183,24 @@ class Level3:
                       self.player_rect.right > platform.left and 
                       self.player_rect.left < platform.left):
                     self.player_rect.right = platform.left
-                    self.velocity_y = 8
+                    self.velocity_y = 11
                 elif (self.velocity_x < 0 and 
                       self.player_rect.left < platform.right and 
                       self.player_rect.right > platform.right):
                     self.player_rect.left = platform.right
-                    self.velocity_y = 8
+                    self.velocity_y = 11
 
         # Screen boundaries
-        if self.player_rect.left < 0:
-            self.player_rect.left = 0
+        if self.player_rect.left < -30:
+            self.player_rect.left = -30
         if self.player_rect.right > WINDOW_WIDTH:
             self.player_rect.right = WINDOW_WIDTH
-        if self.player_rect.top < 0:
-            self.player_rect.top = 0
-        
-        # Check if player hits the deadly platform
-        killing_platform = pygame.Rect(0, WINDOW_HEIGHT - 50, WINDOW_WIDTH, 50)
-        if self.player_rect.colliderect(killing_platform):
-            self.hearts -= 1 
-            self.player_rect.topleft = (100, 600)
+        if self.player_rect.top < -30:
+            self.player_rect.top = -30
+            self.velocity_y = 1
 
         # Animation handling
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and not keys[pygame.K_d]:
             self.frame += 1.5
             if self.frame // self.animation_speed % 3 == 0:
                 self.player = self.walking_left
@@ -238,7 +208,7 @@ class Level3:
                 self.player = self.walking_left2
             else:
                 self.player = self.walking_left3
-        elif keys[pygame.K_d]:
+        elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.frame += 1.5
             if self.frame // self.animation_speed % 3 == 0:
                 self.player = self.walking_right
@@ -246,14 +216,14 @@ class Level3:
                 self.player = self.walking_right2
             else:
                 self.player = self.walking_right3
-        pygame.display.update()
 
         # Drawing
         self.display_surface.blit(self.background, (0, 0))
         self.draw_hearts()
         self.display_surface.blit(self.player, self.player_rect.topleft)
         self.display_surface.blit(self.current_crab_img, self.enemy)
-        self.update_moving_platform()
+        
+        pygame.display.update()
 
         # Reset level when out of hearts
         if self.hearts <= 0:
@@ -272,7 +242,6 @@ class Level3:
                         self.hearts = self.max_hearts
                         self.player_rect = pygame.Rect(100, 600, 50, 50)
                         return Level3()
-                    
                     
         if keys[pygame.K_ESCAPE]:
             pygame.quit()
