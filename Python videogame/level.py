@@ -12,7 +12,7 @@ class Level:
         self.move_up = pygame.image.load("data/Aseprite/towards-going1.png")
         self.move_up2 = pygame.image.load("data/Aseprite/towards-going2.png")
 
-        self.player_rect = self.player.get_rect(topleft=(-1005, 80))
+        self.player_rect = self.player.get_rect(topleft=(600, 420))
         self.speed = 8
 
         self.frame = 0
@@ -37,6 +37,8 @@ class Level:
        
 
         self.current_segment = 0  # Start with the first segment
+        
+        pygame.mouse.set_visible(False)
 
     def run(self):
         keys = pygame.key.get_pressed()

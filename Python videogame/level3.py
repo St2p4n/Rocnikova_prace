@@ -6,7 +6,7 @@ class Level3:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
-        self.player_rect = pygame.Rect(100, 100, 50, 50)
+        self.player_rect = pygame.Rect(100, 100, 30, 50)
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
  
@@ -41,7 +41,7 @@ class Level3:
         self.current_crab_img = self.crab_img
 
         # Enemy 
-        self.enemy = pygame.Rect(550, 962, 50, 80)
+        self.enemy = pygame.Rect(550, 962, 30, 80)
         self.color = (255, 0, 0)
         self.last_hit_time = 0
         self.hit_cooldown = 1000  # 1 second cooldown in milliseconds
@@ -63,17 +63,17 @@ class Level3:
         
         # Platforms
         self.platforms = [
-            pygame.Rect(0, WINDOW_HEIGHT - 100, WINDOW_WIDTH, 50), # Ground
+            pygame.Rect(0, WINDOW_HEIGHT - 100, WINDOW_WIDTH, 70), # Ground
             pygame.Rect(WINDOW_WIDTH - 30, 0, 50, WINDOW_HEIGHT), # Right wall
-            pygame.Rect(0, 570, 150, 200), #
-            pygame.Rect(480, 130, 50, 50),
-            pygame.Rect(860, 145, 50, 5),
-            pygame.Rect(300, 565, 515, 200),
-            pygame.Rect(1700, 195, 190, 180), #
-            pygame.Rect(0, 195, 1530, 180), #
-            pygame.Rect(950, 565, 900, 180), 
-            pygame.Rect(1100, 515, 90, 50), 
-            pygame.Rect(820, 945, 60, 50), 
+            pygame.Rect(0, 570, 130, 200), #
+            pygame.Rect(460, 130, 70, 50),
+            pygame.Rect(840, 145, 70, 5),
+            pygame.Rect(300, 565, 495, 200),
+            pygame.Rect(1680, 195, 210, 170), #
+            pygame.Rect(0, 195, 1530, 170), #
+            pygame.Rect(930, 565, 880, 180), 
+            pygame.Rect(1080, 515, 110, 50), 
+            pygame.Rect(780, 945, 100, 50), 
         ]
 
         self.frame = 0
@@ -107,11 +107,10 @@ class Level3:
             self.hearts -= 1
             self.last_hit_time = current_time
             if self.player_rect.centerx > self.enemy.centerx:
-                self.player_rect.x += 50
-                self.velocity_y = -5
+                self.velocity_y = -15
             else:
-                self.player_rect.x -= 50
-                self.velocity_y = -5
+                self.velocity_y = -15
+
 
     def draw_hearts(self):
         heart_spacing = 35
@@ -191,12 +190,12 @@ class Level3:
                     self.velocity_y = 11
 
         # Screen boundaries
-        if self.player_rect.left < -30:
-            self.player_rect.left = -30
+        if self.player_rect.left < -10:
+            self.player_rect.left = -10
         if self.player_rect.right > WINDOW_WIDTH:
             self.player_rect.right = WINDOW_WIDTH
-        if self.player_rect.top < -30:
-            self.player_rect.top = -30
+        if self.player_rect.top < -20:
+            self.player_rect.top = -20
             self.velocity_y = 1
 
         # Animation handling
@@ -222,6 +221,8 @@ class Level3:
         self.draw_hearts()
         self.display_surface.blit(self.player, self.player_rect.topleft)
         self.display_surface.blit(self.current_crab_img, self.enemy)
+        pygame.mouse.set_visible(False)
+    
         
         pygame.display.update()
 
@@ -240,7 +241,7 @@ class Level3:
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                         self.hearts = self.max_hearts
-                        self.player_rect = pygame.Rect(100, 600, 50, 50)
+                        self.player_rect = pygame.Rect(100, 100, 30, 50)
                         return Level3()
                     
         if keys[pygame.K_ESCAPE]:

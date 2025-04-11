@@ -17,7 +17,7 @@ class Level2:
         self.walking_right2 = pygame.image.load("data/Aseprite/walking_right2.png")
         self.walking_right3 = pygame.image.load("data/Aseprite/walking_right3.png")
 
-        self.background = pygame.image.load("data/Levels/Level2.png")
+        self.background = pygame.image.load("data/Levels/Level5.png")
         self.background = pygame.transform.scale(self.background, (WINDOW_WIDTH, WINDOW_HEIGHT))
         
         # Load moving platform image

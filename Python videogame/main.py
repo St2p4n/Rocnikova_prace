@@ -4,7 +4,7 @@ from level1 import Level1
 from level2 import Level2
 from level3 import Level3
 from level4 import Level4
-
+      
 class Game:
     def __init__(self):
         pygame.init()
@@ -19,12 +19,12 @@ class Game:
         if self.transitioning:
             self.transition += 15
             if self.transition >= 255:
-                self.transitioning = False
+                self.transitioning = False 
                 self.transition = 0
                 return True  # Transition complete 
-        return False
+        return False 
              
-    def run(self):
+    def run(self):           
         running = True
         while running: 
             for event in pygame.event.get(): 
@@ -49,7 +49,7 @@ class Game:
                             self.current_stage.current_segment = 4
                     elif isinstance(self.current_stage, Level4):
                         self.current_stage = Level()
-                        if hasattr(self.current_stage, 'player_rect'):
+                        if hasattr(self.current_stage, 'player_rect'): 
                             self.current_stage.player_rect.topleft = (-1005, 80)
                             self.current_stage.current_segment = 7 
                     else: 
@@ -57,7 +57,7 @@ class Game:
                 continue
             
             # Level switching
-            if isinstance(self.current_stage, Level):
+            if isinstance(self.current_stage, Level):         
                 keys = pygame.key.get_pressed()
                 if hasattr(self.current_stage, 'player_rect'):
                     player_pos = self.current_stage.player_rect.topleft

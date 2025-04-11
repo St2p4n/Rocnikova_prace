@@ -5,7 +5,7 @@ class Level4:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
-        self.player_rect = pygame.Rect(540, 50, 50, 50)
+        self.player_rect = pygame.Rect(1705, 930, 30, 50)
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
  
@@ -48,17 +48,17 @@ class Level4:
         self.current_crab_img = self.crab_img
 
         # Enemy 
-        self.enemy = pygame.Rect(950, 1008, 30, 50)
+        self.enemy = pygame.Rect(700, 1008, 30, 50)
         self.color = (255, 0, 0)
         self.last_hit_time = 0
         self.hit_cooldown = 1000  # 1 second cooldown in milliseconds
-        self.enemy_speed = 2
+        self.enemy_speed = 3
         self.enemy_direction = 1
-        self.enemy_move_range = 150  # How far the crab walks left/right
-        self.enemy_start_x = 850  # Starting X position
+        self.enemy_move_range = 320  # How far the crab walks left/right (half of the full range from 650 to 1290)
+        self.enemy_start_x = 970  # Midpoint between 650 and 1290
         
         # Flag
-        self.flag = pygame.Rect(1580, 130, 50, 50)
+        self.flag = pygame.Rect(930, 460, 50, 50)
         self.flag_color = (255, 255, 0)
         self.level_complete = False
         self.transitioning = False
@@ -68,23 +68,23 @@ class Level4:
         self.platforms = [
             pygame.Rect(0, WINDOW_HEIGHT - 55, WINDOW_WIDTH, 50), # Ground
             pygame.Rect(WINDOW_WIDTH - 30, 0, 50, WINDOW_HEIGHT), # Right wall
-            pygame.Rect(530, 995, 90, 40), # done
-            pygame.Rect(1345, 995, 90, 50), # done
-            pygame.Rect(475, 450, 30, 70), # done
-            pygame.Rect(475, 150, 30, 70), # 
-            pygame.Rect(530, 150, 345, 350), # done 
-            pygame.Rect(1800, 145, 60, 80), # done
-            pygame.Rect(890, 242, 830, 100), # done
-            pygame.Rect(530, 500, 1540, 300), # done
+            pygame.Rect(510, 995, 110, 40), # done
+            pygame.Rect(1325, 995, 110, 50), # done
+            pygame.Rect(425, 450, 70, 70), # done
+            pygame.Rect(425, 150, 70, 70), # done
+            pygame.Rect(510, 150, 365, 350), # done 
+            pygame.Rect(1780, 145, 80, 80), # done
+            pygame.Rect(870, 242, 850, 105), # done
+            pygame.Rect(510, 500, 1560, 290), # done
             pygame.Rect(0, 290, 30, 70), # done 
             pygame.Rect(0, 610, 30, 70), # done 
             pygame.Rect(0, 930, 30, 70), # done
-            pygame.Rect(690, 41, 85, 10), # Moving platform
+            pygame.Rect(211, 41, 105, 10), # Moving platform
         ]
 
         # Moving platform properties
         self.moving_platform_index = 13
-        self.moving_platform_speed = 2  
+        self.moving_platform_speed = 3  
         self.moving_platform_direction = 1  
 
         self.frame = 0
@@ -94,19 +94,19 @@ class Level4:
 
     def update_moving_platform(self):
         platform = self.platforms[self.moving_platform_index]
-        platform.x += self.moving_platform_speed * self.moving_platform_direction
+        platform.y += self.moving_platform_speed * self.moving_platform_direction
         
         if self.moving_platform_index:
             self.display_surface.blit(self.moving_platform_img, platform)
         else:
             pygame.draw.rect(self.display_surface, (100, 100, 100), platform)
         
-        if platform.x >= 1090: 
+        if platform.y >= 950: 
             self.moving_platform_direction = -1
-        elif platform.x <= 600:  
+        elif platform.y <= 100:  
             self.moving_platform_direction = 1
 
-        if self.player_rect.colliderect(platform) and self.velocity_y >= 0:
+        if self.player_rect.colliderect(platform) and self.velocity_y >= 2:
             self.player_rect.x += self.moving_platform_speed * self.moving_platform_direction
     
     def update_enemy(self):
@@ -166,7 +166,6 @@ class Level4:
                     return level
                 return Level()  # Normal transition
         return self
-        
     def run(self):
         keys = pygame.key.get_pressed()
         
@@ -256,9 +255,7 @@ class Level4:
         self.display_surface.blit(self.player, self.player_rect.topleft)
         self.display_surface.blit(self.current_crab_img, self.enemy)
         self.update_moving_platform()
-        
-        for platform in self.platforms:
-            pygame.draw.rect(self.display_surface, (255, 0, 0), platform)
+        pygame.mouse.set_visible(False)
 
         # Reset level when out of hearts
         if self.hearts <= 0:
@@ -275,7 +272,7 @@ class Level4:
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                         self.hearts = self.max_hearts
-                        self.player_rect = pygame.Rect(100, 950, 50, 50)
+                        self.player_rect = pygame.Rect(100, 950, 30, 50)
                         return Level4()
                     
                     

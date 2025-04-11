@@ -5,7 +5,7 @@ class Level1:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
-        self.player_rect = pygame.Rect(100, 600, 50, 50)
+        self.player_rect = pygame.Rect(100, 600, 30, 50)
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
  
@@ -19,6 +19,15 @@ class Level1:
 
         self.background = pygame.image.load("data/Levels/Level1.3.png")
         self.background = pygame.transform.scale(self.background, (WINDOW_WIDTH, WINDOW_HEIGHT))
+        
+        # Load pirate attack sprites
+        self.attack_img_left = pygame.image.load("data/Aseprite/Pirate_attack2.png")
+        self.attack_img_right = pygame.image.load("data/Aseprite/Pirate_attack_right.png")
+        
+        # Attack attributes
+        self.attacking = False
+        self.attack_cooldown = 500  # milliseconds
+        self.last_attack_time = 0
         
         # Load moving platform image
         self.moving_platform_img = pygame.image.load("data/Aseprite/moving_platform.png")
@@ -38,17 +47,17 @@ class Level1:
         self.empty_heart_img = pygame.image.load("data/Aseprite/empty_heart.png")
         self.empty_heart_img = pygame.transform.scale(self.empty_heart_img, (50, 50))
         
-        # Load moving platform image
+        # Moving platform image
         self.moving_platform_img = pygame.image.load("data/Aseprite/moving_platform.png")
         self.moving_platform_img = pygame.transform.scale(self.moving_platform_img, (140, 70))
 
-        # Load crab enemy sprites
+        # Crab enemy
         self.crab_img = pygame.image.load("data/Aseprite/crab.png")
         self.crab_img2 = pygame.image.load("data/Aseprite/crab2.png")
         self.current_crab_img = self.crab_img
 
         # Enemy 
-        self.enemy = pygame.Rect(550, 750, 50, 80)
+        self.enemy = pygame.Rect(580, 750, 30, 60)
         self.color = (255, 0, 0)
         self.last_hit_time = 0
         self.hit_cooldown = 1000  # 1 second cooldown in milliseconds
@@ -57,8 +66,20 @@ class Level1:
         self.enemy_move_range = 90  # How far the crab walks left/right
         self.enemy_start_x = 470  # Starting X position
         
+        # Lasture enemy
+        self.lasture_img = pygame.image.load("data/Aseprite/lasture_attack_opposite.png")
+        self.perl = pygame.image.load("data/Aseprite/perl.png")
+        # Enemy 2
+        self.perl_active = False
+        self.perl_rect = pygame.Rect(0, 0, 20, 20) 
+        self.perl_speed = 9
+        self.perl_cooldown = 1000 # Time between shots in ms
+        self.last_perl_shot = 0
+        self.enemy2 = pygame.Rect(1350, 355, 50, 50)
+        self.color = (255, 0, 0)
+        
         # Flag
-        self.flag = pygame.Rect(1850, 550, 50, 50)
+        self.flag = pygame.Rect(1830, 550, 50, 50)
         self.flag_color = (0, 255, 0)
         self.level_complete = False
         self.transitioning = False
@@ -67,15 +88,15 @@ class Level1:
         # Platforms
         self.platforms = [
             pygame.Rect(0, WINDOW_HEIGHT - 30, WINDOW_WIDTH, 50), # Ground
-            pygame.Rect(70, 680, 230, 30),
-            pygame.Rect(400, 774, 180, 250),
-            pygame.Rect(360, 526, 90, 80),
-            pygame.Rect(560, 426, 180, 100),
-            pygame.Rect(890, 400, 180, 100),
-            pygame.Rect(1220, 420, 180, 100),
-            pygame.Rect(1390, 650, 180, 100),
-            pygame.Rect(1690, 580, 200, 100),
-            pygame.Rect(690, 720, 85, 10),
+            pygame.Rect(50, 680, 250, 30),
+            pygame.Rect(380, 774, 200, 250),
+            pygame.Rect(340, 526, 110, 80),
+            pygame.Rect(540, 426, 200, 100),
+            pygame.Rect(870, 400, 200, 100),
+            pygame.Rect(1200, 400, 200, 100),
+            pygame.Rect(1370, 650, 200, 100),
+            pygame.Rect(1670, 580, 220, 100),
+            pygame.Rect(670, 720, 105, 10),
         ]
 
         # Moving platform properties
@@ -123,7 +144,31 @@ class Level1:
         else:
             self.current_crab_img = self.crab_img2
         self.display_surface.blit(self.current_crab_img, self.enemy)
-
+        
+    def update_perl(self):
+        current_time = pygame.time.get_ticks()
+        
+        # Shoot new pearl if cooldown is over
+        if not self.perl_active and current_time - self.last_perl_shot > self.perl_cooldown:
+            self.perl_active = True
+            self.perl_rect.midright = self.enemy2.midleft
+            self.last_perl_shot = current_time
+        
+        if self.perl_active:
+            self.perl_rect.x -= self.perl_speed
+            
+            # Check if pearl is off-screen
+            if self.perl_rect.right < 400:
+                self.perl_active = False
+            
+            # Optional: Check collision with player
+            if self.perl_rect.colliderect(self.player_rect):
+                self.hearts -= 1
+                self.perl_active = False
+                if self.player_rect.centerx > self.enemy.centerx:
+                    self.velocity_y = -15
+                else:
+                    self.velocity_y = -15
     def check_enemy_collision(self):
         current_time = pygame.time.get_ticks()
         if (self.player_rect.colliderect(self.enemy) and 
@@ -131,11 +176,9 @@ class Level1:
             self.hearts -= 1
             self.last_hit_time = current_time
             if self.player_rect.centerx > self.enemy.centerx:
-                self.player_rect.x += 50
-                self.velocity_y = -5
+                self.velocity_y = -15
             else:
-                self.player_rect.x -= 50
-                self.velocity_y = -5
+                self.velocity_y = -15
 
     def draw_hearts(self):
         heart_spacing = 35
@@ -157,7 +200,7 @@ class Level1:
             if self.transition_alpha >= 255:
                 return Level()  # Transition complete, return new level
         return self
-        
+    
     def run(self):
         keys = pygame.key.get_pressed()
         
@@ -187,6 +230,8 @@ class Level1:
         self.update_enemy()
         self.check_enemy_collision()
         self.animation_enemy()
+        self.update_perl()
+        
 
         # Collision detection with platforms
         self.on_ground = False
@@ -252,10 +297,14 @@ class Level1:
         self.draw_hearts()
         self.display_surface.blit(self.player, self.player_rect.topleft)
         self.display_surface.blit(self.current_crab_img, self.enemy)
+        self.display_surface.blit(self.lasture_img, self.enemy2)
+        self.display_surface.blit(self.perl, self.perl_rect)
         self.update_moving_platform()
+        pygame.mouse.set_visible(False)
 
         # Reset level when out of hearts
         if self.hearts <= 0:
+            pygame.image.load("data/Aseprite/death_pirate.png")
             game_over_font = pygame.font.SysFont("Arial", 50)
             game_over_text = game_over_font.render("Game Over", True, (0, 0, 0))
             self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
@@ -269,7 +318,7 @@ class Level1:
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                         self.hearts = self.max_hearts
-                        self.player_rect = pygame.Rect(100, 600, 50, 50)
+                        self.player_rect = pygame.Rect(100, 590, 30, 50)
                         return Level1()
                     
                     
