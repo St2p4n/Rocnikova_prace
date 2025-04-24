@@ -179,8 +179,6 @@ class Level5:
             pygame.Rect(360, 470, 550, 10),
             pygame.Rect(0, 470, 160, 10),
         ]
-        
-        self.return_to_map_pos = False
 
     def update_moving_platform(self):
         platform = self.platforms[self.moving_platform_index]
@@ -611,6 +609,11 @@ class Level5:
         self.display_surface.blit(self.perl4, self.perl_rect4)
         self.display_surface.blit(self.perl5, self.perl_rect5)
         pygame.mouse.set_visible(False)
+
+        # How to play 
+        instructions = pygame.font.SysFont("Math Bold", 25)
+        instructions = instructions.render("Move: A/D | Jump: Space | Music: N to Play and M to Stop", True, (255, 255, 255))
+        self.display_surface.blit(instructions, (WINDOW_WIDTH - instructions.get_width() - 10, 10))
 
         # Reset level when out of hearts
         if self.hearts <= 0:

@@ -13,7 +13,7 @@ class Level:
         self.move_up = pygame.image.load("data/Aseprite/towards-going1.png")
         self.move_up2 = pygame.image.load("data/Aseprite/towards-going2.png")
 
-        self.player_rect = self.player.get_rect(topleft= (-1005, 80))
+        self.player_rect = self.player.get_rect(topleft= (600, 420))
         self.speed = 6
 
         self.frame = 0
@@ -96,6 +96,13 @@ class Level:
         player_scaled_y = self.player_rect.centery - offset_y
 
         self.display_surface.blit(self.player, (player_scaled_x, player_scaled_y))
+
+        instructions = pygame.font.SysFont("Math Bold", 25)
+        instructions = instructions.render("Move: W/S | Music: N to Play and M to Stop", True, (255, 255, 255))
+        black_cover = pygame.Surface((instructions.get_width() + 15, instructions.get_height() + 10))
+        black_cover.fill((0, 0, 0))
+        self.display_surface.blit(black_cover, (WINDOW_WIDTH - instructions.get_width() - 15, 5))
+        self.display_surface.blit(instructions, (WINDOW_WIDTH - instructions.get_width() - 10, 10))
 
         pygame.display.update()
         self.clock.tick(60)

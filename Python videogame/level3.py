@@ -505,7 +505,7 @@ class Level3:
                 self.player = self.walking_right2
             else:
                 self.player = self.walking_right3
-
+        pygame.display.update()
         # Drawing
         self.display_surface.blit(self.background, (0, 0))
         self.draw_hearts()
@@ -523,8 +523,12 @@ class Level3:
         self.display_surface.blit(self.perl5, self.perl_rect5)
         self.update_perl()
         pygame.mouse.set_visible(False)
-        pygame.display.update()
 
+        # How to play 
+        instructions = pygame.font.SysFont("Math Bold", 25)
+        instructions = instructions.render("Move: A/D | Jump: Space | Music: N to Play and M to Stop", True, (255, 255, 255))
+        self.display_surface.blit(instructions, (WINDOW_WIDTH - instructions.get_width() - 10, 10))
+       
         # Reset level when out of hearts
         if self.hearts <= 0:
             game_over_font = pygame.font.SysFont("Arial", 60)

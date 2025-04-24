@@ -124,8 +124,6 @@ class Level2:
         self.frame = 0
         self.animation_speed = 10
         
-        self.return_to_map_pos = False
-
     def update_moving_platform(self):
         platform = self.platforms[self.moving_platform_index]
         platform.x += self.moving_platform_speed * self.moving_platform_direction
@@ -354,8 +352,6 @@ class Level2:
             self.player_rect.top = 0
             self.velocity_y = 1
 
-            
-        
         # Animation handling
         if keys[pygame.K_a] and not keys[pygame.K_d]:
             self.frame += 1.5
@@ -385,6 +381,11 @@ class Level2:
         self.display_surface.blit(self.perl, self.perl_rect)
         self.update_perl()
         pygame.mouse.set_visible(False)
+
+        # How to play 
+        instructions = pygame.font.SysFont("Math Bold", 25)
+        instructions = instructions.render("Move: A/D | Jump: Space | Music: N to Play and M to Stop", True, (255, 255, 255))
+        self.display_surface.blit(instructions, (WINDOW_WIDTH - instructions.get_width() - 25, 30))
 
         # Reset level when out of hearts
         if self.hearts <= 0:
