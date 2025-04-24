@@ -1,4 +1,9 @@
 from setting import *
+<<<<<<< HEAD
+=======
+from level import Level
+import pygame
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
 
 class Level3:
     def __init__(self):
@@ -36,16 +41,24 @@ class Level3:
         # Load crab enemy sprites
         self.crab_img = pygame.image.load("data/Aseprite/crab.png")
         self.crab_img2 = pygame.image.load("data/Aseprite/crab2.png")
+<<<<<<< HEAD
         self.crab_img3 = pygame.image.load("data/Aseprite/crab2.png")
 
         # Crab Enemy 1 
         self.enemy = pygame.Rect(930, 964, 30, 50)
         self.current_crab_img = self.crab_img
+=======
+        self.current_crab_img = self.crab_img
+
+        # Enemy 
+        self.enemy = pygame.Rect(550, 962, 30, 80)
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.color = (255, 0, 0)
         self.last_hit_time = 0
         self.hit_cooldown = 1000  # 1 second cooldown in milliseconds
         self.enemy_speed = 2
         self.enemy_direction = 1
+<<<<<<< HEAD
         self.enemy_move_range = 410
         self.enemy_start_x = 1330
         
@@ -127,15 +140,30 @@ class Level3:
         
         # Flag
         self.flag = pygame.Rect(1755, 950, 50, 50)
+=======
+        self.enemy_move_range = 90  # How far the crab walks left/right
+        self.enemy_start_x = 470  # Starting X position
+        
+        # Flag
+        self.flag = pygame.Rect(1745, 950, 50, 50)
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.flag_color = (255, 255, 0)
         self.level_complete = False
         self.transitioning = False
         self.transition_alpha = 0
         
+<<<<<<< HEAD
+=======
+        # Return position when going back to main level
+        self.return_to_map_pos = (-770, 440)  # Position on main map
+        self.return_segment = 4  # Segment index for (-770, 440) to (-770, 80)
+        
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         # Platforms
         self.platforms = [
             pygame.Rect(0, WINDOW_HEIGHT - 100, WINDOW_WIDTH, 70), # Ground
             pygame.Rect(WINDOW_WIDTH - 30, 0, 50, WINDOW_HEIGHT), # Right wall
+<<<<<<< HEAD
             pygame.Rect(0, 570, 130, 200), 
             pygame.Rect(460, 130, 70, 50),
             pygame.Rect(840, 145, 70, 5),
@@ -154,14 +182,30 @@ class Level3:
             pygame.Rect(270, 600, 10, 160),
             pygame.Rect(920, 600, 10, 150),
             pygame.Rect(800, 700, 150, 10)
+=======
+            pygame.Rect(0, 570, 130, 200), #
+            pygame.Rect(460, 130, 70, 50),
+            pygame.Rect(840, 145, 70, 5),
+            pygame.Rect(300, 565, 495, 200),
+            pygame.Rect(1680, 195, 210, 170), #
+            pygame.Rect(0, 195, 1530, 170), #
+            pygame.Rect(930, 565, 880, 180), 
+            pygame.Rect(1080, 515, 110, 50), 
+            pygame.Rect(780, 945, 100, 50), 
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         ]
 
         self.frame = 0
         self.animation_speed = 10
 
     def update_enemy(self):
+<<<<<<< HEAD
         # Update Crab 1
         self.enemy.x += self.enemy_speed * self.enemy_direction
+=======
+        self.enemy.x += self.enemy_speed * self.enemy_direction
+        
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         if self.enemy.x > self.enemy_start_x + self.enemy_move_range:
             self.enemy_direction = -1
         elif self.enemy.x < self.enemy_start_x - self.enemy_move_range:
@@ -171,6 +215,7 @@ class Level3:
             self.current_crab_img = pygame.transform.flip(self.crab_img, True, False)
         else:
             self.current_crab_img = self.crab_img
+<<<<<<< HEAD
             
         # Update Crab 2
         self.enemy2.x += self.enemy2_speed * self.enemy2_direction
@@ -199,11 +244,17 @@ class Level3:
     def animation_enemies(self):
         self.frame += 1
         # Animate Crab 1
+=======
+    
+    def animation_enemy(self):
+        self.frame += 1
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         if self.frame // self.animation_speed % 2 == 0:
             self.current_crab_img = self.crab_img
         else:
             self.current_crab_img = self.crab_img2
         self.display_surface.blit(self.current_crab_img, self.enemy)
+<<<<<<< HEAD
         
         # Animate Crab 2
         if self.frame // self.animation_speed % 2 == 0:
@@ -255,6 +306,11 @@ class Level3:
     def check_enemy_collisions(self):
         current_time = pygame.time.get_ticks()
         # Check Crab 1 collision
+=======
+
+    def check_enemy_collision(self):
+        current_time = pygame.time.get_ticks()
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         if (self.player_rect.colliderect(self.enemy) and 
             current_time - self.last_hit_time > self.hit_cooldown):
             self.hearts -= 1
@@ -263,6 +319,7 @@ class Level3:
                 self.velocity_y = -15
             else:
                 self.velocity_y = -15
+<<<<<<< HEAD
                 
         # Check Crab 2 collision
         if (self.player_rect.colliderect(self.enemy2) and 
@@ -283,6 +340,10 @@ class Level3:
                 self.velocity_y = -15
             else:
                 self.velocity_y = -15
+=======
+
+
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
     def draw_hearts(self):
         heart_spacing = 35
         for i in range(self.max_hearts):
@@ -303,6 +364,7 @@ class Level3:
             if self.transition_alpha >= 255:
                 return "level_complete"  # Signal that level is complete
         return self
+<<<<<<< HEAD
     
     def update_perl(self):
         current_time = pygame.time.get_ticks()
@@ -415,6 +477,9 @@ class Level3:
             if self.player_rect.colliderect(spike):
                 self.hearts -= 3
 
+=======
+        
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
     def run(self):
         keys = pygame.key.get_pressed()
         
@@ -422,18 +487,30 @@ class Level3:
         self.handle_flag_collision()
         
         if self.transitioning:
+<<<<<<< HEAD
             if self.transitioning:
                 self.transition_alpha += 15
             if self.transition_alpha >= 255:
                 return "level_complete"  
             return self
+=======
+            result = self.update_transition()
+            if result == "level_complete":
+                return Level()  # Return to main level with proper position
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         
         # Game logic
         self.velocity_x = 0
         if keys[pygame.K_a] and not keys[pygame.K_d]:
+<<<<<<< HEAD
             self.velocity_x = -4
         elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.velocity_x = 4
+=======
+            self.velocity_x = -5
+        elif keys[pygame.K_d] and not keys[pygame.K_a]:
+            self.velocity_x = 5
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
 
         if keys[pygame.K_SPACE] and self.on_ground:
             self.velocity_y = self.jump_strength
@@ -444,10 +521,15 @@ class Level3:
         self.player_rect.y += self.velocity_y
 
         self.update_enemy()
+<<<<<<< HEAD
         self.check_enemy_collisions()
         self.animation_enemies()
         self.spike_collisions()
         self.animation_lasture()
+=======
+        self.check_enemy_collision()
+        self.animation_enemy()
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
 
         # Collision detection with platforms
         self.on_ground = False
@@ -483,7 +565,11 @@ class Level3:
         if self.player_rect.top < -20:
             self.player_rect.top = -20
             self.velocity_y = 1
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         # Animation handling
         if keys[pygame.K_a] and not keys[pygame.K_d]:
             self.frame += 1.5
@@ -506,6 +592,7 @@ class Level3:
         self.display_surface.blit(self.background, (0, 0))
         self.draw_hearts()
         self.display_surface.blit(self.player, self.player_rect.topleft)
+<<<<<<< HEAD
         self.animation_enemies()
         self.display_surface.blit(self.current_lasture_img4, self.enemy4)
         self.display_surface.blit(self.current_lasture_img5, self.enemy5)
@@ -519,10 +606,17 @@ class Level3:
         self.display_surface.blit(self.perl5, self.perl_rect5)
         self.update_perl()
         pygame.mouse.set_visible(False)
+=======
+        self.display_surface.blit(self.current_crab_img, self.enemy)
+        pygame.mouse.set_visible(False)
+    
+        
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         pygame.display.update()
 
         # Reset level when out of hearts
         if self.hearts <= 0:
+<<<<<<< HEAD
             game_over_font = pygame.font.SysFont("Arial", 60)
             game_over_text = game_over_font.render("Game Over", True, (255, 255, 255))
             self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
@@ -531,6 +625,16 @@ class Level3:
             restart_text = restart_font.render("Press R to restart level", True, (255, 255, 255))
             self.display_surface.blit(restart_text, (WINDOW_WIDTH//2 - restart_text.get_width()//2, 
                                                     WINDOW_HEIGHT//2 - restart_text.get_height()//2 + 70))
+=======
+            game_over_font = pygame.font.SysFont("Arial", 50)
+            game_over_text = game_over_font.render("Game Over", True, (0, 0, 0))
+            self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
+                                                     WINDOW_HEIGHT//2 - game_over_text.get_height()//2))
+            restart_font = pygame.font.SysFont("Arial", 30)
+            restart_text = restart_font.render("Press R to restart level", True, (255, 255, 255))
+            self.display_surface.blit(restart_text, (WINDOW_WIDTH//2 - restart_text.get_width()//2, 
+                                                    WINDOW_HEIGHT//2 - restart_text.get_height()//2 + 50))
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
             pygame.display.update()
             while True:
                 for event in pygame.event.get():

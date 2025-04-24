@@ -128,4 +128,14 @@ class Level:
             else:
                 print("Player has reached the start of the path!")
     def set_zoom(self, zoom_level):
+<<<<<<< HEAD
         self.target_zoom = zoom_level
+=======
+        self.target_zoom = zoom_level
+
+    
+
+    
+
+    
+>>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
