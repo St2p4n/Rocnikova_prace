@@ -1,8 +1,4 @@
 from setting import *
-<<<<<<< HEAD
-=======
-from level import Level
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
 
 class Level1:
     def __init__(self):
@@ -23,18 +19,6 @@ class Level1:
         self.background = pygame.image.load("data/Levels/Level1.3.png")
         self.background = pygame.transform.scale(self.background, (WINDOW_WIDTH, WINDOW_HEIGHT))
         
-<<<<<<< HEAD
-=======
-        # Load pirate attack sprites
-        self.attack_img_left = pygame.image.load("data/Aseprite/Pirate_attack2.png")
-        self.attack_img_right = pygame.image.load("data/Aseprite/Pirate_attack_right.png")
-        
-        # Attack attributes
-        self.attacking = False
-        self.attack_cooldown = 500  # milliseconds
-        self.last_attack_time = 0
-        
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         # Load moving platform image
         self.moving_platform_img = pygame.image.load("data/Aseprite/moving_platform.png")
         self.moving_platform_img = pygame.transform.scale(self.moving_platform_img, (100, 10))
@@ -74,19 +58,12 @@ class Level1:
         
         # Lasture enemy
         self.lasture_img = pygame.image.load("data/Aseprite/lasture_attack_opposite.png")
-<<<<<<< HEAD
         self.lasture_img2 = pygame.image.load("data/Aseprite/lasture_attack2_opposite.png")
-=======
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.perl = pygame.image.load("data/Aseprite/perl.png")
         # Enemy 2
         self.perl_active = False
         self.perl_rect = pygame.Rect(0, 0, 20, 20) 
-<<<<<<< HEAD
         self.perl_speed = 6
-=======
-        self.perl_speed = 9
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.perl_cooldown = 1000 # Time between shots in ms
         self.last_perl_shot = 0
         self.enemy2 = pygame.Rect(1350, 355, 50, 50)
@@ -115,11 +92,7 @@ class Level1:
 
         # Moving platform properties
         self.moving_platform_index = 9  
-<<<<<<< HEAD
         self.moving_platform_speed = 1.5
-=======
-        self.moving_platform_speed = 2  
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.moving_platform_direction = 1  
 
         self.frame = 0
@@ -135,11 +108,7 @@ class Level1:
             pygame.draw.rect(self.display_surface, (100, 100, 100), platform)
         
         if platform.x >= 1200: 
-<<<<<<< HEAD
             self.moving_platform_direction = -1.5
-=======
-            self.moving_platform_direction = -1
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         elif platform.x <= 680:  
             self.moving_platform_direction = 1
 
@@ -166,7 +135,6 @@ class Level1:
         else:
             self.current_crab_img = self.crab_img2
         self.display_surface.blit(self.current_crab_img, self.enemy)
-<<<<<<< HEAD
 
     def animation_lasture(self):
         current_time = pygame.time.get_ticks()
@@ -212,44 +180,6 @@ class Level1:
             else:
                 self.velocity_y = -15
 
-=======
-        
-    def update_perl(self):
-        current_time = pygame.time.get_ticks()
-        
-        # Shoot new pearl if cooldown is over
-        if not self.perl_active and current_time - self.last_perl_shot > self.perl_cooldown:
-            self.perl_active = True
-            self.perl_rect.midright = self.enemy2.midleft
-            self.last_perl_shot = current_time
-        
-        if self.perl_active:
-            self.perl_rect.x -= self.perl_speed
-            
-            # Check if pearl is off-screen
-            if self.perl_rect.right < 400:
-                self.perl_active = False
-            
-            # Optional: Check collision with player
-            if self.perl_rect.colliderect(self.player_rect):
-                self.hearts -= 1
-                self.perl_active = False
-                if self.player_rect.centerx > self.enemy.centerx:
-                    self.velocity_y = -15
-                else:
-                    self.velocity_y = -15
-    def check_enemy_collision(self):
-        current_time = pygame.time.get_ticks()
-        if (self.player_rect.colliderect(self.enemy) and 
-            current_time - self.last_hit_time > self.hit_cooldown):
-            self.hearts -= 1
-            self.last_hit_time = current_time
-            if self.player_rect.centerx > self.enemy.centerx:
-                self.velocity_y = -15
-            else:
-                self.velocity_y = -15
-
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
     def draw_hearts(self):
         heart_spacing = 35
         for i in range(self.max_hearts):
@@ -268,11 +198,7 @@ class Level1:
         if self.transitioning:
             self.transition_alpha += 15
             if self.transition_alpha >= 255:
-<<<<<<< HEAD
                 return "level_complete"
-=======
-                return Level()  # Transition complete, return new level
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         return self
     
     def run(self):
@@ -281,7 +207,6 @@ class Level1:
         # Flag collision 
         self.handle_flag_collision()
         
-<<<<<<< HEAD
         if self.transitioning:
             return self.update_transition()
         
@@ -290,18 +215,6 @@ class Level1:
             self.velocity_x = -4
         elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.velocity_x = 4
-=======
-        # If transitioning, skip normal game logic
-        if self.transitioning:
-            return self.update_transition()
-        
-        # Normal game logic
-        self.velocity_x = 0
-        if keys[pygame.K_a] and not keys[pygame.K_d]:
-            self.velocity_x = -5
-        elif keys[pygame.K_d] and not keys[pygame.K_a]:
-            self.velocity_x = 5
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
 
         if keys[pygame.K_SPACE] and self.on_ground:
             self.velocity_y = self.jump_strength
@@ -316,10 +229,7 @@ class Level1:
         self.check_enemy_collision()
         self.animation_enemy()
         self.update_perl()
-<<<<<<< HEAD
         self.animation_lasture()
-=======
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         
 
         # Collision detection with platforms
@@ -386,11 +296,7 @@ class Level1:
         self.draw_hearts()
         self.display_surface.blit(self.player, self.player_rect.topleft)
         self.display_surface.blit(self.current_crab_img, self.enemy)
-<<<<<<< HEAD
         self.display_surface.blit(self.current_lasture_img, self.enemy2)
-=======
-        self.display_surface.blit(self.lasture_img, self.enemy2)
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.display_surface.blit(self.perl, self.perl_rect)
         self.update_moving_platform()
         pygame.mouse.set_visible(False)
@@ -398,7 +304,6 @@ class Level1:
         # Reset level when out of hearts
         if self.hearts <= 0:
             pygame.image.load("data/Aseprite/death_pirate.png")
-<<<<<<< HEAD
             game_over_font = pygame.font.SysFont("Arial", 70)
             game_over_text = game_over_font.render("Game Over", True, (255, 255, 255))
             self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
@@ -407,16 +312,6 @@ class Level1:
             restart_text = restart_font.render("Press R to restart level", True, (255, 255, 255))
             self.display_surface.blit(restart_text, (WINDOW_WIDTH//2 - restart_text.get_width()//2, 
                                                     WINDOW_HEIGHT//2 - restart_text.get_height()//2 + 80))
-=======
-            game_over_font = pygame.font.SysFont("Arial", 50)
-            game_over_text = game_over_font.render("Game Over", True, (0, 0, 0))
-            self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
-                                                     WINDOW_HEIGHT//2 - game_over_text.get_height()//2))
-            restart_font = pygame.font.SysFont("Arial", 30)
-            restart_text = restart_font.render("Press R to restart level", True, (255, 255, 255))
-            self.display_surface.blit(restart_text, (WINDOW_WIDTH//2 - restart_text.get_width()//2, 
-                                                    WINDOW_HEIGHT//2 - restart_text.get_height()//2 + 50))
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
             pygame.display.update()
             while True:
                 for event in pygame.event.get():
