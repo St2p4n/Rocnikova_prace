@@ -87,11 +87,12 @@ class Level1:
             pygame.Rect(1200, 400, 200, 100),
             pygame.Rect(1370, 650, 200, 100),
             pygame.Rect(1670, 580, 220, 100),
-            pygame.Rect(670, 720, 105, 10),
+            pygame.Rect(1350, 355, 30, 50),
+            pygame.Rect(670, 720, 105, 10)
         ]
 
         # Moving platform properties
-        self.moving_platform_index = 9  
+        self.moving_platform_index = 10
         self.moving_platform_speed = 1.5
         self.moving_platform_direction = 1  
 

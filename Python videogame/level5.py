@@ -1,20 +1,10 @@
 from setting import *
-<<<<<<< HEAD
 
 class Level5:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
         self.player_rect = pygame.Rect(1830, 920, 30, 50)
-=======
-from level import Level
-
-class Level2:
-    def __init__(self):
-        pygame.init()  
-        self.display_surface = pygame.display.get_surface()
-        self.player_rect = pygame.Rect(100, 950, 30, 50)
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
  
@@ -56,18 +46,13 @@ class Level2:
         self.crab_img2 = pygame.image.load("data/Aseprite/crab2.png")
 
         # Crab Enemy 1 
-<<<<<<< HEAD
         self.enemy = pygame.Rect(1380, 668, 30, 50)
-=======
-        self.enemy = pygame.Rect(950, 1008, 30, 50)
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.current_crab_img = self.crab_img
         self.color = (255, 0, 0)
         self.last_hit_time = 0
         self.hit_cooldown = 1000  # 1 second cooldown in milliseconds
         self.enemy_speed = 3
         self.enemy_direction = 1
-<<<<<<< HEAD
         self.enemy_move_range = 210
         self.enemy_start_x = 1550
         
@@ -137,35 +122,6 @@ class Level2:
         
         # Flag
         self.flag = pygame.Rect(1810, 470, 50, 50)
-=======
-        self.enemy_move_range = 150
-        self.enemy_start_x = 850
-        
-        # Crab Enemy 2 
-        self.enemy2 = pygame.Rect(285, 418, 30, 50)  # Different position
-        self.current_crab2_img = self.crab_img
-        self.last_hit_time2 = 0
-        self.hit_cooldown = 1000  
-        self.enemy2_speed = 3
-        self.enemy2_direction = 1
-        self.enemy2_move_range = 120
-        self.enemy2_start_x = 385
-        
-        # Lasture enemy
-        self.lasture_img = pygame.image.load("data/Aseprite/lasture_attack_opposite.png")
-        self.perl = pygame.image.load("data/Aseprite/perl.png")
-        # Enemy 2
-        self.perl_active = False
-        self.perl_rect = pygame.Rect(0, 0, 25, 25) 
-        self.perl_speed = 9
-        self.perl_cooldown = 1000 # Time between shots in ms
-        self.last_perl_shot = 0
-        self.enemy4 = pygame.Rect(1590, 680, 50, 50)
-        self.color = (255, 0, 0)
-        
-        # Flag
-        self.flag = pygame.Rect(1580, 130, 50, 50)
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         self.flag_color = (255, 255, 0)
         self.level_complete = False
         self.transitioning = False
@@ -175,7 +131,6 @@ class Level2:
         self.platforms = [
             pygame.Rect(0, WINDOW_HEIGHT - 55, WINDOW_WIDTH, 50), # Ground
             pygame.Rect(WINDOW_WIDTH - 50, 0, 50, WINDOW_HEIGHT), # Right wall
-<<<<<<< HEAD
             pygame.Rect(1690, 980, 180, 40), 
             pygame.Rect(1320, 890, 263, 70),
             pygame.Rect(1010, 794, 195, 86),  
@@ -224,28 +179,6 @@ class Level2:
             pygame.Rect(360, 470, 550, 10),
             pygame.Rect(0, 470, 160, 10),
         ]
-=======
-            pygame.Rect(610, 965, 80, 40),
-            pygame.Rect(1130, 870, 100, 180),
-            pygame.Rect(1035, 950, 100, 50), 
-            pygame.Rect(265, 440, 260, 180),
-            pygame.Rect(640, 520, 235, 150),
-            pygame.Rect(1270, 225, 80, 50), 
-            pygame.Rect(1420, 150, 210, 100), 
-            pygame.Rect(1270, 725, 360, 100), 
-            pygame.Rect(1015, 610, 90, 140), 
-            pygame.Rect(1110, 675, 55, 75), 
-            pygame.Rect(670, 341, 105, 10), # Moving platform
-        ]
-
-        # Moving platform properties
-        self.moving_platform_index = 12
-        self.moving_platform_speed = 2  
-        self.moving_platform_direction = 1  
-
-        self.frame = 0
-        self.animation_speed = 10
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         
         self.return_to_map_pos = False
 
@@ -258,20 +191,13 @@ class Level2:
         else:
             pygame.draw.rect(self.display_surface, (100, 100, 100), platform)
         
-<<<<<<< HEAD
         if platform.x >= 1580: 
             self.moving_platform_direction = -1.5
         elif platform.x <= 900:  
-=======
-        if platform.x >= 1090: 
-            self.moving_platform_direction = -1
-        elif platform.x <= 600:  
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
             self.moving_platform_direction = 1
 
         if self.player_rect.colliderect(platform) and self.velocity_y >= 0:
             self.player_rect.x += self.moving_platform_speed * self.moving_platform_direction
-<<<<<<< HEAD
     def update_moving_platform2(self):
         platform = self.platforms[self.moving_platform_index2]
         platform.y += self.moving_platform_speed2 * self.moving_platform_direction2
@@ -336,8 +262,6 @@ class Level2:
 
         if self.player_rect.colliderect(platform) and self.velocity_y >= 0:
             self.player_rect.x += self.moving_platform_speed5 * self.moving_platform_direction5
-=======
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
     
     def update_enemy(self):
         # Update Crab 1
@@ -415,31 +339,16 @@ class Level2:
         if not self.transitioning and self.player_rect.colliderect(self.flag):
             self.transitioning = True
             self.transition_alpha = 0
-<<<<<<< HEAD
            
-=======
-            self.return_to_map_pos = True  # Set flag for special return position
-    
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
     def update_transition(self):
         if self.transitioning:
             self.transition_alpha += 15
             if self.transition_alpha >= 255:
-<<<<<<< HEAD
                 return "level_complete" 
-=======
-                if self.return_to_map_pos:
-                    # Return to Level but signal we want special position
-                    level = Level()
-                    level.current_segment = 2  # Set segment directly
-                    return level
-                return Level()  # Normal transition
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         return self
     
     def update_perl(self):
         current_time = pygame.time.get_ticks()
-<<<<<<< HEAD
         # Shoot new pearl if cooldown is over
         if not self.perl_active and current_time - self.last_perl_shot > self.perl_cooldown:
                 self.perl_active = True
@@ -587,31 +496,6 @@ class Level2:
             if self.player_rect.colliderect(spike):
                 self.hearts -= 3
 
-=======
-        
-        # Shoot new pearl if cooldown is over
-        if not self.perl_active and current_time - self.last_perl_shot > self.perl_cooldown:
-            self.perl_active = True
-            self.perl_rect.midright = self.enemy4.midleft
-            self.last_perl_shot = current_time
-        
-        if self.perl_active:
-            self.perl_rect.x -= self.perl_speed
-            
-            # Check if pearl is off-screen
-            if self.perl_rect.right < 1200:
-                self.perl_active = False
-            
-            # Optional: Check collision with player
-            if self.perl_rect.colliderect(self.player_rect):
-                self.hearts -= 1
-                self.perl_active = False
-                if self.player_rect.centerx > self.enemy.centerx:
-                    self.velocity_y = -15
-                else:
-                    self.velocity_y = -15
-        
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
     def run(self):
         keys = pygame.key.get_pressed()
         
@@ -624,15 +508,9 @@ class Level2:
         # Game logic
         self.velocity_x = 0
         if keys[pygame.K_a] and not keys[pygame.K_d]:
-<<<<<<< HEAD
             self.velocity_x = -4
         elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.velocity_x = 4
-=======
-            self.velocity_x = -5
-        elif keys[pygame.K_d] and not keys[pygame.K_a]:
-            self.velocity_x = 5
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
 
         if keys[pygame.K_SPACE] and self.on_ground:
             self.velocity_y = self.jump_strength
@@ -643,7 +521,6 @@ class Level2:
         self.player_rect.y += self.velocity_y
 
         self.update_moving_platform()
-<<<<<<< HEAD
         self.update_moving_platform2()
         self.update_moving_platform3()
         self.update_moving_platform4()
@@ -654,11 +531,6 @@ class Level2:
         self.spike_collisions()
         self.animation_enemies()
         self.animation_lasture()
-=======
-        self.update_enemy()
-        self.check_enemy_collisions()
-        self.animation_enemies()
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
 
         # Collision detection with platforms
         self.on_ground = False
@@ -695,7 +567,6 @@ class Level2:
             self.player_rect.top = 0
             self.velocity_y = 1
         
-<<<<<<< HEAD
         killing_platform = pygame.Rect(0, WINDOW_HEIGHT - 60, WINDOW_WIDTH, 50)
         if self.player_rect.colliderect(killing_platform):
             self.hearts -= 3
@@ -706,28 +577,14 @@ class Level2:
             if self.frame // self.animation_speed % 4 == 0:
                 self.player = self.walking_left
             elif self.frame // self.animation_speed % 4 == 1:
-=======
-        # Animation handling
-        if keys[pygame.K_a] and not keys[pygame.K_d]:
-            self.frame += 1.5
-            if self.frame // self.animation_speed % 3 == 0:
-                self.player = self.walking_left
-            elif self.frame // self.animation_speed % 3 == 1:
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
                 self.player = self.walking_left2
             else:
                 self.player = self.walking_left3
         elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.frame += 1.5
-<<<<<<< HEAD
             if self.frame // self.animation_speed % 4 == 0:
                 self.player = self.walking_right
             elif self.frame // self.animation_speed % 4 == 1:
-=======
-            if self.frame // self.animation_speed % 3 == 0:
-                self.player = self.walking_right
-            elif self.frame // self.animation_speed % 3 == 1:
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
                 self.player = self.walking_right2
             else:
                 self.player = self.walking_right3
@@ -739,7 +596,6 @@ class Level2:
         self.display_surface.blit(self.player, self.player_rect.topleft)
         self.animation_enemies()
         self.update_moving_platform()
-<<<<<<< HEAD
         self.update_moving_platform2()
         self.update_moving_platform3()
         self.update_moving_platform4()
@@ -754,16 +610,10 @@ class Level2:
         self.display_surface.blit(self.perl3, self.perl_rect3)
         self.display_surface.blit(self.perl4, self.perl_rect4)
         self.display_surface.blit(self.perl5, self.perl_rect5)
-=======
-        self.display_surface.blit(self.lasture_img, self.enemy4)
-        self.display_surface.blit(self.perl, self.perl_rect)
-        self.update_perl()
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
         pygame.mouse.set_visible(False)
 
         # Reset level when out of hearts
         if self.hearts <= 0:
-<<<<<<< HEAD
             game_over_font = pygame.font.SysFont("Arial", 70)
             game_over_text = game_over_font.render("Game Over", True, (255, 255, 255))
             self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
@@ -772,22 +622,11 @@ class Level2:
             restart_text = restart_font.render("Press R to restart level", True, (255, 255, 255))
             self.display_surface.blit(restart_text, (WINDOW_WIDTH//2 - restart_text.get_width()//2, 
                                                     WINDOW_HEIGHT//2 - restart_text.get_height()//2 + 80))
-=======
-            game_over_font = pygame.font.SysFont("Arial", 50)
-            game_over_text = game_over_font.render("Game Over", True, (0, 0, 0))
-            self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
-                                                     WINDOW_HEIGHT//2 - game_over_text.get_height()//2))
-            restart_font = pygame.font.SysFont("Arial", 30)
-            restart_text = restart_font.render("Press R to restart level", True, (255, 255, 255))
-            self.display_surface.blit(restart_text, (WINDOW_WIDTH//2 - restart_text.get_width()//2, 
-                                                    WINDOW_HEIGHT//2 - restart_text.get_height()//2 + 50))
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
             pygame.display.update()
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                         self.hearts = self.max_hearts
-<<<<<<< HEAD
                         self.player_rect = pygame.Rect(1830, 920, 30, 50)
                         return Level5()
         
@@ -803,10 +642,6 @@ class Level2:
             pygame.display.update()
             pygame.time.wait(3000)
             return None
-=======
-                        self.player_rect = pygame.Rect(100, 950, 30, 50)
-                        return Level2()
->>>>>>> ec4858a9a66ad9964f3c91a5bbe78b27c7932fc6
                     
         if keys[pygame.K_ESCAPE]:
             pygame.quit()
