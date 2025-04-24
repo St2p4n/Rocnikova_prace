@@ -12,8 +12,8 @@ class Level:
         self.move_up = pygame.image.load("data/Aseprite/towards-going1.png")
         self.move_up2 = pygame.image.load("data/Aseprite/towards-going2.png")
 
-        self.player_rect = self.player.get_rect(topleft=(600, 420))
-        self.speed = 8
+        self.player_rect = self.player.get_rect(topleft= (600, 420))
+        self.speed = 6
 
         self.frame = 0
         self.animation_speed = 10
@@ -35,8 +35,9 @@ class Level:
         ((-1005, -710), (-100, -710))
         ]     
        
-
         self.current_segment = 0  # Start with the first segment
+        
+        pygame.mouse.set_visible(False)
 
     def run(self):
         keys = pygame.key.get_pressed()
@@ -126,10 +127,5 @@ class Level:
                 self.current_segment -= 1  # Move to the previous segment
             else:
                 print("Player has reached the start of the path!")
-
     def set_zoom(self, zoom_level):
         self.target_zoom = zoom_level
-
-    
-
-    
