@@ -358,6 +358,18 @@ class Level4:
             self.current_lasture_img8 = self.lasture_img_left2
         else:
             self.current_lasture_img8 = self.lasture_img_left  
+    
+    def music_off(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_m]:
+                pygame.mixer.music.set_volume(0)
+                
+    def music_on(self):
+        keys = pygame.key.get_pressed() 
+        if keys[pygame.K_n]:
+                pygame.mixer.music.load("data/Songs/8-bit.mp3")
+                pygame.mixer.music.set_volume(0.1)
+                pygame.mixer.music.play(-1)
 
     def run(self):
         keys = pygame.key.get_pressed()
@@ -388,6 +400,8 @@ class Level4:
         self.check_enemy_collision()
         self.animation_enemy()
         self.animation_lasture()
+        self.music_off()
+        self.music_on()
 
         # Collision detection with platforms
         self.on_ground = False
@@ -469,6 +483,8 @@ class Level4:
 
         # Reset level when out of hearts
         if self.hearts <= 0:
+            pygame.mixer.music.stop()
+            pygame.image.load("data/Aseprite/death_pirate.png")
             game_over_font = pygame.font.SysFont("Arial", 60)
             game_over_text = game_over_font.render("Game Over", True, (255, 255, 255))
             self.display_surface.blit(game_over_text, (WINDOW_WIDTH//2 - game_over_text.get_width()//2, 
@@ -481,6 +497,10 @@ class Level4:
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                        if pygame.mixer.music.get_volume() > 0:
+                           pygame.mixer.music.load("data/Songs/8-bit.mp3")
+                           pygame.mixer.music.set_volume(0.1)
+                           pygame.mixer.music.play(-1)
                         self.hearts = self.max_hearts
                         self.player_rect = pygame.Rect(1705, 930, 30, 50)
                         return Level4()

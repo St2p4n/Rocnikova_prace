@@ -26,23 +26,6 @@ class Game:
                 return True  # Transition complete       
         return False  
 
-    def music_off(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_m]:
-            if isinstance(self.current_stage, (Level, Level1, Level2, Level3, Level4, Level5)):
-                pygame.mixer.music.set_volume(0)
-    def music_on(self):
-        keys = pygame.key.get_pressed() 
-        if keys[pygame.K_n]:
-            if isinstance(self.current_stage, Level):
-                pygame.mixer.music.load("data/Songs/8-bit.mp3")
-                pygame.mixer.music.set_volume(0.1)
-                pygame.mixer.music.play(-1)
-            elif isinstance(self.current_stage, (Level1, Level2, Level3, Level4, Level5)):
-                pygame.mixer.music.load("data/Songs/8-bit2.mp3")
-                pygame.mixer.music.set_volume(0.1)
-                pygame.mixer.music.play(-1)
-
     def run(self):           
         running = True
         while running:     
@@ -117,8 +100,6 @@ class Game:
                             
             pygame.display.update()
             self.clock.tick(60)
-            self.music_off()
-            self.music_on()
 
         pygame.quit()      
         sys.exit()

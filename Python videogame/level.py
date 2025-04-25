@@ -40,6 +40,18 @@ class Level:
         
         pygame.mouse.set_visible(False)
 
+    def music_off(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_m]:
+                pygame.mixer.music.set_volume(0)
+                
+    def music_on(self):
+        keys = pygame.key.get_pressed() 
+        if keys[pygame.K_n]:
+                pygame.mixer.music.load("data/Songs/8-bit.mp3")
+                pygame.mixer.music.set_volume(0.1)
+                pygame.mixer.music.play(-1)
+
     def run(self):
         keys = pygame.key.get_pressed()
         moving_down = False
@@ -103,6 +115,9 @@ class Level:
         black_cover.fill((0, 0, 0))
         self.display_surface.blit(black_cover, (WINDOW_WIDTH - instructions.get_width() - 15, 5))
         self.display_surface.blit(instructions, (WINDOW_WIDTH - instructions.get_width() - 10, 10))
+
+        self.music_off()
+        self.music_on()
 
         pygame.display.update()
         self.clock.tick(60)

@@ -202,6 +202,18 @@ class Level1:
                 return "level_complete"
         return self
     
+    def music_off(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_m]:
+                pygame.mixer.music.set_volume(0)
+                
+    def music_on(self):
+        keys = pygame.key.get_pressed() 
+        if keys[pygame.K_n]:
+                pygame.mixer.music.load("data/Songs/8-bit.mp3")
+                pygame.mixer.music.set_volume(0.1)
+                pygame.mixer.music.play(-1)
+    
     def run(self):
         keys = pygame.key.get_pressed()
         
@@ -300,6 +312,8 @@ class Level1:
         self.display_surface.blit(self.current_lasture_img, self.enemy2)
         self.display_surface.blit(self.perl, self.perl_rect)
         self.update_moving_platform()
+        self.music_off()
+        self.music_on()
         pygame.mouse.set_visible(False)
 
         # How to play 
@@ -309,6 +323,7 @@ class Level1:
 
         # Reset level when out of hearts
         if self.hearts <= 0:
+            pygame.mixer.music.stop()
             pygame.image.load("data/Aseprite/death_pirate.png")
             game_over_font = pygame.font.SysFont("Arial", 70)
             game_over_text = game_over_font.render("Game Over", True, (255, 255, 255))
@@ -322,6 +337,10 @@ class Level1:
             while True:
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                        if pygame.mixer.music.get_volume() > 0:
+                            pygame.mixer.music.load("data/Songs/8-bit.mp3")
+                            pygame.mixer.music.set_volume(0.1)
+                            pygame.mixer.music.play(-1)
                         self.hearts = self.max_hearts
                         self.player_rect = pygame.Rect(100, 590, 30, 50)
                         return Level1()
