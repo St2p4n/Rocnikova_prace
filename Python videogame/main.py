@@ -16,7 +16,6 @@ class Game:
         self.current_stage = Level()
         self.transitioning = False  
         self.transition = 0
-
     def handle_transition(self):                      
         if self.transitioning:
             self.transition += 15                        

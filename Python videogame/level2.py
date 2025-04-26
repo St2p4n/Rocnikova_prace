@@ -398,7 +398,7 @@ class Level2:
 
         # How to play 
         instructions = pygame.font.SysFont("Math Bold", 25)
-        instructions = instructions.render("Move: A/D | Jump: Space | Music: N to Play and M to Stop", True, (255, 255, 255))
+        instructions = instructions.render("Move: A/D | Jump: Space | Music: N to Play and M to Stop | ESC shut down game", True, (255, 255, 255))
         self.display_surface.blit(instructions, (WINDOW_WIDTH - instructions.get_width() - 25, 30))
 
         # Reset level when out of hearts

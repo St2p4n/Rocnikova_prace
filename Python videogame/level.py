@@ -110,7 +110,7 @@ class Level:
         self.display_surface.blit(self.player, (player_scaled_x, player_scaled_y))
 
         instructions = pygame.font.SysFont("Math Bold", 25)
-        instructions = instructions.render("Move: W/S | Music: N to Play and M to Stop", True, (255, 255, 255))
+        instructions = instructions.render("Move: W/S | Music: N to Play and M to Stop | ESC shut down game", True, (255, 255, 255))
         black_cover = pygame.Surface((instructions.get_width() + 15, instructions.get_height() + 10))
         black_cover.fill((0, 0, 0))
         self.display_surface.blit(black_cover, (WINDOW_WIDTH - instructions.get_width() - 15, 5))
@@ -118,6 +118,10 @@ class Level:
 
         self.music_off()
         self.music_on()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
 
         pygame.display.update()
         self.clock.tick(60)
