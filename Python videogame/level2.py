@@ -5,6 +5,7 @@ class Level2:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
+        self.clock = pygame.time.Clock()
         self.player_rect = pygame.Rect(100, 950, 30, 50)
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
@@ -300,6 +301,7 @@ class Level2:
                 pygame.mixer.music.play(-1)
         
     def run(self):
+        self.clock.tick(45)
         keys = pygame.key.get_pressed()
         
         # Handle flag collision first

@@ -124,7 +124,7 @@ class Level:
             pygame.quit()
 
         pygame.display.update()
-        self.clock.tick(60)
+        self.clock.tick(45)
 
     def move_along_path(self, segment_start, segment_end, direction):
         if segment_start[0] == segment_end[0]:  # Vertical segment

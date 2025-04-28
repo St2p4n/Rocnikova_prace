@@ -6,7 +6,7 @@ from level2 import Level2
 from level3 import Level3
 from level4 import Level4 
 from level5 import Level5
-      
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -16,6 +16,7 @@ class Game:
         self.current_stage = Level()
         self.transitioning = False  
         self.transition = 0
+
     def handle_transition(self):                      
         if self.transitioning:
             self.transition += 15                        
@@ -98,7 +99,7 @@ class Game:
                             self.current_stage = Level5()
                             
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(45) 
 
         pygame.quit()      
         sys.exit()

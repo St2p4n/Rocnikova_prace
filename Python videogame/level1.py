@@ -4,6 +4,7 @@ class Level1:
     def __init__(self):
         pygame.init()  
         self.display_surface = pygame.display.get_surface()
+        self.clock = pygame.time.Clock()
         self.player_rect = pygame.Rect(100, 600, 30, 50)
         self.player_color = (255, 0, 0)
         self.player = pygame.image.load("data/Aseprite/Pirate.png")
@@ -215,6 +216,7 @@ class Level1:
                 pygame.mixer.music.play(-1)
     
     def run(self):
+        self.clock.tick(45)
         keys = pygame.key.get_pressed()
         
         # Flag collision 
@@ -344,7 +346,6 @@ class Level1:
                         self.hearts = self.max_hearts
                         self.player_rect = pygame.Rect(100, 590, 30, 50)
                         return Level1()
-                    
                     
         if keys[pygame.K_ESCAPE]:
             pygame.quit()
